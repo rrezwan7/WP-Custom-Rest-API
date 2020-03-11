@@ -30,10 +30,8 @@ function wl_posts()
 		$data[$i]['slug'] = $post->post_name;
 		$data[$i]['publish_date'] = $post->post_date;
 		$data[$i]['exerpt'] = $post->post_exerpt;
-		$data[$i]['featured_image']['thumbnail'] = get_the_post_thumbnail_url($post->ID, 'thumbnail');
-		$post_cat = wp_get_post_categories($post->ID);
-		//$data[$i]['category'] = get_the_category($post_cat)[0]->name;
-		$data[$i]['category_id'] = wp_get_post_categories($post->ID);
+		$data[$i]['featured_image'] = get_the_post_thumbnail_url($post->ID);
+		//$data[$i]['category_id'] = wp_get_post_categories($post->ID);
 		$data[$i]['category'] = get_cat_name(wp_get_post_categories($post->ID)[0]);
 		$i++;
 	}

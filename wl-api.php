@@ -104,6 +104,21 @@ function wl_post($slug)
 	return $data;
 }
 
+function wl_id($slug)
+{
+	$args = [
+		'p' => $slug['slug'],
+		'post_type' => 'post'
+	];
+
+	$post = get_posts($args);
+
+	$data['title'] = $post[0]->post_title;
+	$data['content'] = $post[0]->post_content;
+
+	return $data;
+}
+
 add_action('rest_api_init', function () {
 	register_rest_route('ar/v1', 'posts', [
 		'methods' => 'GET',
@@ -114,12 +129,16 @@ add_action('rest_api_init', function () {
 		'methods' => 'GET',
 		'callback' => 'wl_post',
 	));
-	register_rest_route('ar/v1', 'cat/(?P<slug>[a-zA-Z0-9-]+)', [
+	register_rest_route('ar/v1', 'cat/(?P<slug>[a-zA-Z0-9-]+)', array(
 		'methods' => 'GET',
 		'callback' => 'wl_cat'
-	]);
+	));
 	register_rest_route('ar/v1', 'slider', [
 		'methods' => 'GET',
 		'callback' => 'wl_slider'
 	]);
+	register_rest_route('ar/v1', 'single/(?P<slug>[a-zA-Z0-9-]+)', array(
+		'methods' => 'GET',
+		'callback' => 'wl_id'
+	));
 });
